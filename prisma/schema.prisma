@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/*
+  Initial schema: minimal User model.
+  Each feature will extend this schema and we'll create migrations after each change.
+*/
+model User {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  email      String   @unique
+  name       String?
+  hashedPassword String?  // for future username/password auth; will be nullable for OAuth
+  image      String?   // profile avatar url (Cloudinary)
+}
