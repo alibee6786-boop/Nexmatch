@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import SocialButton from "@/components/SocialButton";
 
 const SignInSchema = z.object({
   email: z.string().email(),
@@ -29,20 +30,32 @@ export default function SignInPage() {
   return (
     <div className="max-w-md mx-auto mt-8">
       <h2 className="text-2xl font-semibold mb-4">Sign in</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium">Email</label>
-          <input className="mt-1 block w-full rounded-md border-gray-300" {...register("email")} />
-        </div>
-        <div>
-          <label className="block text-sm font-medium">Password</label>
-          <input type="password" className="mt-1 block w-full rounded-md border-gray-300" {...register("password")} />
-        </div>
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded">
-          Sign in
-        </button>
-      </form>
+
+      <div className="space-y-3 mb-4">
+        <SocialButton provider="google" href="/api/auth/signin/google?callbackUrl=/">
+          Sign in with Google
+        </SocialButton>
+        <SocialButton provider="github" href="/api/auth/signin/github?callbackUrl=/">
+          Sign in with GitHub
+        </SocialButton>
+      </div>
+
+      <div className="border-t pt-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium">Email</label>
+            <input className="mt-1 block w-full rounded-md border-gray-300" {...register("email")} />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Password</label>
+            <input type="password" className="mt-1 block w-full rounded-md border-gray-300" {...register("password")} />
+          </div>
+          {error && <p className="text-sm text-red-600">{error}</p>}
+          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded">
+            Sign in
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
