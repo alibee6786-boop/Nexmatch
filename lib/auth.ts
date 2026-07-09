@@ -1,6 +1,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import CredentialsProvider from "@auth/core/providers/credentials";
 import GitHubProvider from "@auth/core/providers/github";
+import GoogleProvider from "@auth/core/providers/google";
 import { AuthOptions } from "@auth/core";
 import { prisma } from "./prisma";
 import bcrypt from "bcryptjs";
@@ -25,10 +26,13 @@ export const authOptions: AuthOptions = {
         return { id: user.id, email: user.email, name: user.name };
       }
     }),
-    // Optional OAuth provider example (configure env vars)
     GitHubProvider({
       clientId: process.env.GITHUB_ID || "",
       clientSecret: process.env.GITHUB_SECRET || ""
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID || "",
+      clientSecret: process.env.GOOGLE_SECRET || ""
     })
   ],
   session: {
